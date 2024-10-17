@@ -6,6 +6,8 @@ RSpec.describe Registrant do
             registrant_1 = Registrant.new('Bruce', 18, true )
             registrant_2 = Registrant.new('Penny', 15 )
 
+            registrant = Registrant.new(registrant_1, registrant_2)
+
             expect(registrant).to be_a(Registrant)
         end
 
@@ -25,7 +27,7 @@ RSpec.describe Registrant do
     end
 
     describe '#earn_permit' do
-        it 'changes registrant permit status from false to true after permit is earned'
+        it 'changes registrant permit status from false to true after permit is earned' do
             registrant_1 = Registrant.new('Bruce', 18, true )
             registrant_2 = Registrant.new('Penny', 15 )
 
