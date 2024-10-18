@@ -8,7 +8,8 @@ RSpec.describe Registrant do
 
             registrant = Registrant.new(registrant_1, registrant_2)
 
-            expect(registrant).to be_a(Registrant)
+            expect(registrant_1).to be_a(Registrant)
+            expect(registrant_2).to be_a(Registrant)
         end
 
         it 'has attributes' do
