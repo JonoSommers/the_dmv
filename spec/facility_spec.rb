@@ -31,6 +31,7 @@ RSpec.describe Facility do
     @cruz = Vehicle.new({vin: '123456789abcdefgh', year: 2012, make: 'Chevrolet', model: 'Cruz', engine: :ice} )
     @bolt = Vehicle.new({vin: '987654321abcdefgh', year: 2019, make: 'Chevrolet', model: 'Bolt', engine: :ev} )
     @camaro = Vehicle.new({vin: '1a2b3c4d5e6f', year: 1969, make: 'Chevrolet', model: 'Camaro', engine: :ice} )
+    @today = Date.today
   end
 
   describe '#vehicle registration' do
@@ -40,6 +41,7 @@ RSpec.describe Facility do
       expect(@cruz).to be_a(Vehicle)
       expect(@bolt).to be_a(Vehicle)
       expect(@camaro).to be_a(Vehicle)
+      expect(@today).to eq(Date.today)
     end
 
     it 'starts unregistered' do
@@ -52,10 +54,9 @@ RSpec.describe Facility do
       @facility_1.add_service('Vehicle Registration')
       expect(@facility_1.services).to eq(['Vehicle Registration'])
     end
-
     it 'registers the cruz vehicle' do
       @facility_1.register_vehicle(@cruz)
-      expect(@cruz.registration_date).to eq(2023-01-12)
+      expect(@cruz.registration_date).to eq(@today)
       expect(@cruz.plate_type).to eq(:regular)
       expect(@facility_1.registered_vehicles).to eq([@cruz])
       expect(@facility_1.collected_fees).to eq(100)
