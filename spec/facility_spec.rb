@@ -49,14 +49,15 @@ RSpec.describe Facility do
     end
 
     it 'add_service "vehicle registration" service to facility_1' do
-      expect(@facility_1.add_service).to be('Vehicle Registration')
+      @facility_1.add_service('Vehicle Registration')
+      expect(@facility_1.services).to eq(['Vehicle Registration'])
     end
 
     it 'registers the cruz vehicle' do
-      expect(@facility_1.register_vehicle(@cruz)).to eq([cruz])
+      @facility_1.register_vehicle(@cruz)
       expect(@cruz.registration_date).to eq(2023-01-12)
       expect(@cruz.plate_type).to eq(:regular)
-      expect(@facility_1.registered_vehicles).to eq([cruz])
+      expect(@facility_1.registered_vehicles).to eq([@cruz])
       expect(@facility_1.collected_fees).to eq(100)
     end
   end
