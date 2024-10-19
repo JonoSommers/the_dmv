@@ -34,4 +34,13 @@ class Facility
     end
     @registered_vehicles << vehicle
   end
+
+  def administer_written_test(registrant)
+    unless @services.include?('Written Test')
+      return false
+    else
+      registrant.take_written_test
+    end
+  end
 end
+
