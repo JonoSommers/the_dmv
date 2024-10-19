@@ -31,5 +31,12 @@ class Registrant
             @license_data[:license] = false
         end
     end
-    
+
+    def renew_license
+        if @license_data[:written] == true && @license_data[:license] == true
+            @license_data[:renewed] = true
+        else
+            @license_data[:renewed] = false
+        end
+    end
 end
