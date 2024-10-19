@@ -14,18 +14,24 @@ class Facility
   end
 
   def register_vehicle(vehicle)
-    vehicle.set_registration_date
-    if vehicle.antique? == true
-      @collected_fees += 25
-      vehicle.set_plate_type
-    elsif 
-      vehicle.electric_vehicle? == true
-      @collected_fees +=  200
-      vehicle.set_plate_type
+    unless @services.include?('Vehicle Registration')
+      return nil
     else
-      @collected_fees += 100
-      vehicle.set_plate_type
+      if vehicle.antique?
+        @collected_fees += 25
+        vehicle.set_plate_type
+        vehicle.set_registration_date
+      elsif 
+        vehicle.electric_vehicle?
+        @collected_fees +=  200
+        vehicle.set_plate_type
+        vehicle.set_registration_date
+      else
+        @collected_fees += 100
+        vehicle.set_plate_type
+        vehicle.set_registration_date
+      end
     end
-      @registered_vehicles << vehicle
+    @registered_vehicles << vehicle
   end
 end
