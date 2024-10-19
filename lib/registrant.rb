@@ -23,4 +23,12 @@ class Registrant
             @license_data[:written] = false
         end
     end
+
+    def take_road_test
+        if @license_data[:written] == true
+            @license_data[:license] = true
+        else
+            @license_data[:license] = false
+        end
+    end
 end
