@@ -61,5 +61,30 @@ RSpec.describe Facility do
       expect(@facility_1.registered_vehicles).to eq([@cruz])
       expect(@facility_1.collected_fees).to eq(100)
     end
+
+    it 'registers the camaro vehicle' do
+      @facility_1.register_vehicle(@camaro)
+      expect(@camaro.registration_date).to eq(@today)
+      expect(@camaro.plate_type).to eq(:antique)
+      expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro])
+      expect(@facility_1.collected_fees).to eq(25)
+    end
+
+    xit 'registers the bolt vehicle' do
+      @facility_1.register_vehicle(@bolt)
+      expect(@bolt.registration_date).to eq(@today)
+      expect(@bolt.plate_type).to eq(:ev)
+      expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
+      expect(@facility_1.collected_fees).to eq(200)
+    end
+  end
+
+  describe '#@registered_vehicles' do
+    xit 'stores the registered vehciles in an array' do
+      @facility_1.register_vehicle(@cruz)
+      @facility_1.register_vehicle(@camaro)
+      @facility_1.register_vehicle(@bolt)
+      expect(@registered_vehicles).to eq([@cruz, @camaro, @bolt])
+    end
   end
 end
