@@ -44,7 +44,7 @@ RSpec.describe Facility do
       expect(@today).to be_an_instance_of(Date)
     end
 
-    it 'vehicles start unregistered' do
+    it 'has an unregistered vehicle by default' do
       expect(@cruz.registration_date).to be(nil)
       expect(@facility_1.registered_vehicles).to eq([])
       expect(@facility_1.collected_fees).to eq(0)
@@ -114,6 +114,80 @@ RSpec.describe Facility do
       expect(@facility_2.register_vehicle(@bolt)).to be(nil)
       expect(@facility_2.registered_vehicles).to eq([])
       expect(@facility_2.collected_fees).to eq(0)
+    end
+  end
+
+  before(:each) do
+    @registrant_1 = Registrant.new('Bruce', 18, true )
+    @registrant_2 = Registrant.new('Penny', 16 )
+    @registrant_3 = Registrant.new('Tucker', 15 )
+    @facility_1 = Facility.new({name: 'DMV Tremont Branch', address: '2855 Tremont Place Suite 118 Denver CO 80205', phone: '(720) 865-4600'})
+    @facility_2 = Facility.new({name: 'DMV Northeast Branch', address: '4685 Peoria Street Suite 101 Denver CO 80239', phone: '(720) 865-4600'})
+  end
+
+  describe '#Written Test' do
+    it 'exists' do
+      expect(@registrant_1).to be_a(Registrant)
+      expect(@registrant_2).to be_a(Registrant)
+      expect(@registrant_3).to be_a(Registrant)
+      expect(@facility_1).to be_a(Facility)
+      expect(@facility_2).to be_a(Facility)
+    end
+
+    it 'starts @registrant_1 with license_data :written as false' do
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+      expect(@registrant_1.permit?).to be(true)
+      expect(@facility_1.administer_written_test(@registrant_1)).to be(false)
+      expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
+    end
+
+    it 'add_service "Written Test" to facility_1' do
+      @facility_1.add_service('Written Test')
+      expect(@facility_1.services).to eq(['Written Test'])
+    end
+
+    it 'administers "Written Test" and updates license_date :written to true for @registrant_1' do
+      @facility_1.add_service('Written Test')
+      expect(@facility_1.administer_written_test(@registrant_1)).to be(true)
+      expect(@registrant_1.license_data).to eq({:written=>true, :license=>false, :renewed=>false})
+    end
+
+    it 'starts @registrant_2 with license_data :written as false' do
+      expect(@registrant_2.age).to eq(16)
+      expect(@registrant_2.permit?).to be(false)
+      expect(@facility_1.administer_written_test(@registrant_2)).to be(false)
+    end
+
+    it 'has @registrant_2 get thier permit before taking the "Written Test"'do
+      @registrant_2.earn_permit
+      expect(@registrant_2.permit?).to be(true)
+    end
+
+    it 'administers "Written Test" and updates license_date :written to true for @registrant_2' do
+      @registrant_2.earn_permit
+      expect(@registrant_2.permit?).to be(true)
+      @facility_1.add_service('Written Test')
+      expect(@facility_1.administer_written_test(@registrant_2)).to be(true)
+      expect(@registrant_2.license_data).to eq({:written=>true, :license=>false, :renewed=>false})
+    end
+
+    it 'starts @registrant_3 with license_data :written as false' do
+      expect(@registrant_3.age).to eq(15)
+      expect(@registrant_3.permit?).to be(false)
+      expect(@facility_1.administer_written_test(@registrant_3)).to be(false)
+    end
+
+    it 'has @registrant_3 get thier permit before taking the "Written Test"' do
+      @registrant_3.earn_permit
+      expect(@registrant_3.permit?).to be(true)
+    end
+
+    it 'administers "Written Test" and DOES NOT updates license_date :written to true for @registrant_3' do
+      @registrant_3.earn_permit
+      expect(@registrant_3.permit?).to be(true)
+      @facility_1.add_service('Written Test')
+      expect(@facility_1.administer_written_test(@registrant_3)).to be(false)
+      expect(@registrant_3.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
     end
   end
 end
