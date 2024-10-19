@@ -1,5 +1,5 @@
 class Facility
-  attr_reader :name, :address, :phone, :services, :collected_fees, :registered_vehicles, :today
+  attr_reader :name, :address, :phone, :services, :collected_fees, :registered_vehicles
   def initialize(facility_info)
     @name = facility_info[:name]
     @address = facility_info[:address]
@@ -7,7 +7,6 @@ class Facility
     @services = []
     @registered_vehicles = []
     @collected_fees = 0
-    @today = Date.today
   end
 
   def add_service(service)
@@ -27,6 +26,6 @@ class Facility
       @collected_fees += 100
       vehicle.set_plate_type
     end
-    @registered_vehicles << vehicle
+      @registered_vehicles << vehicle
   end
 end
