@@ -31,4 +31,5 @@ class Registrant
             @license_data[:license] = false
         end
     end
+    
 end
