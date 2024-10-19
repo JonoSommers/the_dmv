@@ -41,10 +41,10 @@ RSpec.describe Facility do
       expect(@cruz).to be_a(Vehicle)
       expect(@bolt).to be_a(Vehicle)
       expect(@camaro).to be_a(Vehicle)
-      expect(@today).to eq(Date.today)
+      expect(@today).to be_an_instance_of(Date)
     end
 
-    it 'starts unregistered' do
+    it 'vehicles start unregistered' do
       expect(@cruz.registration_date).to be(nil)
       expect(@facility_1.registered_vehicles).to eq([])
       expect(@facility_1.collected_fees).to eq(0)
@@ -54,7 +54,9 @@ RSpec.describe Facility do
       @facility_1.add_service('Vehicle Registration')
       expect(@facility_1.services).to eq(['Vehicle Registration'])
     end
-    it 'registers the cruz vehicle' do
+    
+    it 'registers the cruz vehicle adds it to the registered_vehicles array' do
+      @facility_1.add_service('Vehicle Registration')
       @facility_1.register_vehicle(@cruz)
       expect(@cruz.registration_date).to eq(@today)
       expect(@cruz.plate_type).to eq(:regular)
@@ -62,29 +64,56 @@ RSpec.describe Facility do
       expect(@facility_1.collected_fees).to eq(100)
     end
 
-    it 'registers the camaro vehicle' do
+    it 'registers the camaro vehicle and adds it to the registered_vehicles array' do
+      @facility_1.add_service('Vehicle Registration')
+      @facility_1.register_vehicle(@cruz)
       @facility_1.register_vehicle(@camaro)
       expect(@camaro.registration_date).to eq(@today)
       expect(@camaro.plate_type).to eq(:antique)
       expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro])
-      expect(@facility_1.collected_fees).to eq(25)
     end
 
-    xit 'registers the bolt vehicle' do
+    it 'registers the bolt vehicle' do
+      @facility_1.add_service('Vehicle Registration')
+      @facility_1.register_vehicle(@cruz)
+      @facility_1.register_vehicle(@camaro)
       @facility_1.register_vehicle(@bolt)
       expect(@bolt.registration_date).to eq(@today)
       expect(@bolt.plate_type).to eq(:ev)
       expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
-      expect(@facility_1.collected_fees).to eq(200)
     end
   end
 
   describe '#@registered_vehicles' do
-    xit 'stores the registered vehciles in an array' do
+    it 'stores all the registered vehciles in an array' do
+      @facility_1.add_service('Vehicle Registration')
       @facility_1.register_vehicle(@cruz)
       @facility_1.register_vehicle(@camaro)
       @facility_1.register_vehicle(@bolt)
-      expect(@registered_vehicles).to eq([@cruz, @camaro, @bolt])
+      expect(@facility_1.registered_vehicles).to eq([@cruz, @camaro, @bolt])
+    end
+  end
+
+  describe '#@collected_fees' do
+    it 'stores and increases the total collected fees from registered vehicles' do
+      @facility_1.add_service('Vehicle Registration')
+      @facility_1.register_vehicle(@cruz)
+      @facility_1.register_vehicle(@camaro)
+      @facility_1.register_vehicle(@bolt)
+      expect(@facility_1.collected_fees).to eq(325)
+    end
+  end
+
+  describe '@facility_2' do
+    it 'starts with an empty array of registered_vehicles and services' do
+      expect(@facility_2.registered_vehicles).to eq([])
+      expect(@facility_2.services).to eq([])
+    end
+
+    it 'cannot register a vehicle' do
+      expect(@facility_2.register_vehicle(@bolt)).to be(nil)
+      expect(@facility_2.registered_vehicles).to eq([])
+      expect(@facility_2.collected_fees).to eq(0)
     end
   end
 end
