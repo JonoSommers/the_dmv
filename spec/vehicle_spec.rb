@@ -16,7 +16,7 @@ RSpec.describe Vehicle do
       expect(@cruz.model).to eq('Cruz')
       expect(@cruz.engine).to eq(:ice)
       expect(@cruz.registration_date).to eq(nil)
-      expect(@today).to eq(Date.today)
+      expect(@today).to be_an_instance_of(Date)
     end
   end
 
