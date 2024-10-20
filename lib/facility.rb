@@ -1,10 +1,10 @@
 class Facility
   attr_reader :name, :address, :phone, :services, :collected_fees, :registered_vehicles
   def initialize(facility_info)
-    @name = facility_info[:name]
-    @address = facility_info[:address]
+    @name = facility_info[:name] || facility_info[:dmv_office]
+    @address = facility_info[:address] || "#{facility_info[:address_li]}, #{facility_info[:address__1]}"
     @phone = facility_info[:phone]
-    @services = []
+    @services = facility_info[:services_p] || []
     @registered_vehicles = []
     @collected_fees = 0
   end
@@ -14,9 +14,7 @@ class Facility
   end
 
   def register_vehicle(vehicle)
-    unless @services.include?('Vehicle Registration')
-      return nil
-    else
+    if @services.include?('Vehicle Registration')
       if vehicle.antique?
         @collected_fees += 25
         vehicle.set_plate_type
@@ -31,8 +29,10 @@ class Facility
         vehicle.set_plate_type
         vehicle.set_registration_date
       end
+      @registered_vehicles << vehicle
+    else
+      return nil
     end
-    @registered_vehicles << vehicle
   end
 
   def administer_written_test(registrant)
