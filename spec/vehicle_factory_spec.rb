@@ -16,7 +16,7 @@ RSpec.describe VehicleFactory do
     end
 
     describe '#create_vehicles' do
-        it 'creates a vehicle and shovles it into the @created_vehicles array' do
+        it 'creates a vehicle and shovels it into the @created_vehicles array' do
             @factory.create_vehicles(@wa_ev_registrations)
             expect(@factory.vehicles_made.first).to be_a(Vehicle)
             expect(@factory.vehicles_made.length).to be > 0
