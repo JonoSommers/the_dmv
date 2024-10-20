@@ -4,23 +4,33 @@ RSpec.describe VehicleFactory do
     before(:each) do
         @factory = VehicleFactory.new
         @wa_ev_registrations = DmvDataService.new.wa_ev_registrations
-        @factory.create_vehilces(@wa_ev_registrations)
-        @created_vehicles = []
+        @vehicles_made = []
     end
 
     describe '#initialize' do
         it 'exists' do
             expect(@factory).to be_a(VehicleFactory)
             expect(@wa_ev_registrations).to be_an(Array)
-            expect(@created_vehicles).to eq([])
+            expect(@vehicles_made).to eq([])
         end
     end
 
     describe '#create_vehicles' do
         it 'creates a vehicle and shovles it into the @created_vehicles array' do
             @factory.create_vehicles(@wa_ev_registrations)
-            expect(@created_vehicles.first).to be_a(Vehicle)
-            expect(@created_vehicles.length).to be > 0
+            expect(@factory.vehicles_made.first).to be_a(Vehicle)
+            expect(@factory.vehicles_made.length).to be > 0
+        end
+
+        it 'checks the vehicle info is correct' do
+            @factory.create_vehicles(@wa_ev_registrations)
+            expect(@factory.vehicles_made.first.vin).to be_a(String)
+            expect(@factory.vehicles_made.first.year).to be_a(String)
+            expect(@factory.vehicles_made.first.make).to be_a(String)
+            expect(@factory.vehicles_made.first.model).to be_a(String)
+            expect(@factory.vehicles_made.first.engine).to be_a(Symbol)
+            expect(@factory.vehicles_made.first.registration_date).to be(nil)
+            expect(@factory.vehicles_made.first.plate_type).to be_a(Symbol)
         end
     end
 end
