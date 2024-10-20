@@ -16,7 +16,7 @@ class Vehicle
     @model = vehicle_details[:model]
     @engine = vehicle_details[:engine] || :ev 
     @registration_date = nil
-    @plate_type = nil
+    @plate_type = nil || :ev
   end
 
   def set_registration_date
