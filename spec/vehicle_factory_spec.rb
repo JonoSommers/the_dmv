@@ -7,13 +7,15 @@ RSpec.describe VehicleFactory do
         @vehicles_made = []
     end
 
-    describe '#create_vehicles' do
+    describe '#initialize' do
         it 'exists' do
             expect(@factory).to be_a(VehicleFactory)
             expect(@wa_ev_registrations).to be_an(Array)
             expect(@vehicles_made).to eq([])
         end
+    end
 
+    describe '#create_vehicles' do
         it 'creates a vehicle and shovles it into the @created_vehicles array' do
             @factory.create_vehicles(@wa_ev_registrations)
             expect(@factory.vehicles_made.first).to be_a(Vehicle)
