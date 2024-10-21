@@ -110,7 +110,7 @@ RSpec.describe Facility do
       expect(@facility_2.services).to eq([])
     end
 
-    it 'cannot register a vehicle' do
+    it '@facility_2 cannot register a vehicle' do
       expect(@facility_2.register_vehicle(@bolt)).to be(nil)
       expect(@facility_2.registered_vehicles).to eq([])
       expect(@facility_2.collected_fees).to eq(0)
@@ -134,6 +134,7 @@ RSpec.describe Facility do
       expect(@facility_2).to be_a(Facility)
     end
   end
+  
   describe '#Written Test' do  
     it 'starts @registrant_1 with license_data :written as false' do
       expect(@registrant_1.license_data).to eq({:written=>false, :license=>false, :renewed=>false})
