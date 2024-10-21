@@ -1,9 +1,9 @@
 class Facility
   attr_reader :name, :address, :phone, :services, :collected_fees, :registered_vehicles
   def initialize(facility_info)
-    @name = facility_info[:name] || facility_info[:dmv_office]
-    @address = facility_info[:address] || "#{facility_info[:address_li]}, #{facility_info[:address__1]}"
-    @phone = facility_info[:phone]
+    @name = facility_info[:name] || facility_info[:dmv_office] || facility_info[:office_name]
+    @address = facility_info[:address] || facility_info[:address1] ||facility_info[:street_address_line_1] || "#{facility_info[:address_li]}, #{facility_info[:address__1]} #{facility_info[:location]}"
+    @phone = facility_info[:phone] || facility_info[:public_phone_number]
     @services = facility_info[:services_p] || []
     @registered_vehicles = []
     @collected_fees = 0
