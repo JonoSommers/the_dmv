@@ -5,8 +5,8 @@ class CreatingFacilities
         @facilities_made = []
     end
 
-    def create_dmv_facilities(co_dmv_office_locations)
-        co_dmv_office_locations.each do |facility|
+    def create_dmv_facilities(mo_dmv_office_locations)
+        mo_dmv_office_locations.each do |facility|
             new_facility = Facility.new(facility)
             @facilities_made << new_facility
         end
