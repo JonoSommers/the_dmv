@@ -2,7 +2,10 @@ class Facility
   attr_reader :name, :address, :phone, :services, :collected_fees, :registered_vehicles
   def initialize(facility_info)
     @name = facility_info[:name] || facility_info[:dmv_office] || facility_info[:office_name]
-    @address = facility_info[:address] || facility_info[:address1] ||facility_info[:street_address_line_1] || "#{facility_info[:address_li]}, #{facility_info[:address__1]} #{facility_info[:location]}"
+    @address = facility_info[:address] || 
+      facility_info[:address1] ||
+      facility_info[:street_address_line_1] || 
+      "#{facility_info[:address_li]}, #{facility_info[:address__1]} #{facility_info[:location]}"
     @phone = facility_info[:phone] || facility_info[:public_phone_number]
     @services = facility_info[:services_p] || []
     @registered_vehicles = []
@@ -36,26 +39,26 @@ class Facility
   end
 
   def administer_written_test(registrant)
-    unless @services.include?('Written Test')
-      return false
-    else
+    if @services.include?('Written Test')
       registrant.take_written_test
+    else
+      false
     end
   end
   
   def administer_road_test(registrant)
-    unless @services.include?('Road Test')
-      return false
-    else
+    if @services.include?('Road Test')
       registrant.take_road_test
+    else
+      false
     end
   end
 
   def renew_drivers_license(registrant)
-    unless @services.include?('Renew License')
-      return false
-    else
+    if @services.include?('Renew License')
       registrant.renew_license
+    else
+      false
     end
   end
 
